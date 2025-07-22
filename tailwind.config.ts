@@ -24,10 +24,11 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				// TONY TYLER rock colors
-				'electric-orange': '#FF6B35',
-				'deep-black': '#1A1A1A',
-				'rock-gray': '#333333',
+				// TONY TYLER rock colors - Red & Black
+				'electric-red': '#DC2626',
+				'blood-red': '#B91C1C',
+				'deep-black': '#0F0F0F',
+				'rock-gray': '#1F1F1F',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -98,8 +99,8 @@ export default {
 					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'pulse-glow': {
-					'0%, 100%': { boxShadow: '0 0 5px #FF6B35' },
-					'50%': { boxShadow: '0 0 20px #FF6B35, 0 0 30px #FF6B35' }
+					'0%, 100%': { boxShadow: '0 0 5px #DC2626' },
+					'50%': { boxShadow: '0 0 20px #DC2626, 0 0 30px #DC2626' }
 				}
 			},
 			animation: {
