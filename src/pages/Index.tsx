@@ -4,35 +4,80 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
+import TicketModal from "@/components/TicketModal";
 
 const Index = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [selectedConcert, setSelectedConcert] = useState(null);
+  const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
 
   const concerts = [
     {
       id: 1,
-      date: "15 сентября 2024",
-      venue: "Клуб Rock City",
+      date: "15 августа 2025",
+      venue: "Aurora Concert Hall",
       city: "Москва",
-      price: "2500₽",
-      status: "available"
+      price: "3500₽",
+      status: "available",
+      ticketsLeft: 45,
+      totalTickets: 1200,
+      description: "Презентация нового альбома 'Neon Dreams'"
     },
     {
       id: 2,
-      date: "28 сентября 2024", 
-      venue: "Aurora Concert Hall",
+      date: "28 августа 2025", 
+      venue: "A2 Green Concert",
       city: "Санкт-Петербург",
-      price: "2800₽",
-      status: "sold-out"
+      price: "3200₽",
+      status: "available",
+      ticketsLeft: 156,
+      totalTickets: 2000,
+      description: "Акустический сет + полный электрический концерт"
     },
     {
       id: 3,
-      date: "12 октября 2024",
+      date: "12 сентября 2025",
       venue: "Red Club",
       city: "Екатеринбург",
-      price: "2200₽",
-      status: "available"
+      price: "2800₽",
+      status: "available",
+      ticketsLeft: 89,
+      totalTickets: 800,
+      description: "Тур 'Новая Волна' - эксклюзивные треки"
+    },
+    {
+      id: 4,
+      date: "25 сентября 2025",
+      venue: "Stadium Live",
+      city: "Казань",
+      price: "3000₽",
+      status: "available",
+      ticketsLeft: 234,
+      totalTickets: 1500,
+      description: "Специальные гости + световое шоу"
+    },
+    {
+      id: 5,
+      date: "8 октября 2025",
+      venue: "Известия Hall",
+      city: "Москва",
+      price: "4500₽",
+      status: "hot",
+      ticketsLeft: 12,
+      totalTickets: 2500,
+      description: "Большой концерт в столице - последние билеты!"
+    },
+    {
+      id: 6,
+      date: "22 октября 2025",
+      venue: "Crocus City Hall",
+      city: "Москва",
+      price: "5000₽",
+      status: "sold-out",
+      ticketsLeft: 0,
+      totalTickets: 6000,
+      description: "Финальный концерт тура - РАСПРОДАНО!"
     }
   ];
 
@@ -53,6 +98,16 @@ const Index = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const openTicketModal = (concert: any) => {
+    setSelectedConcert(concert);
+    setIsTicketModalOpen(true);
+  };
+
+  const closeTicketModal = () => {
+    setIsTicketModalOpen(false);
+    setSelectedConcert(null);
+  };
+
   return (
     <div className="min-h-screen bg-deep-black text-white font-open-sans">
       {/* Navigation */}
@@ -69,7 +124,10 @@ const Index = () => {
                 </a>
               ))}
             </div>
-            <Button className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold">
+            <Button 
+              onClick={() => document.getElementById('concerts-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold"
+            >
               Купить билеты
             </Button>
           </div>
@@ -98,7 +156,12 @@ const Index = () => {
               <Icon name="Play" size={20} className="mr-2" />
               Послушать музыку
             </Button>
-            <Button size="lg" variant="outline" className="border-electric-red text-electric-red hover:bg-electric-red hover:text-deep-black text-lg px-8 py-4">
+            <Button 
+              onClick={() => document.getElementById('concerts-section')?.scrollIntoView({ behavior: 'smooth' })}
+              size="lg" 
+              variant="outline" 
+              className="border-electric-red text-electric-red hover:bg-electric-red hover:text-deep-black text-lg px-8 py-4"
+            >
               <Icon name="Calendar" size={20} className="mr-2" />
               Концерты
             </Button>
@@ -147,7 +210,7 @@ const Index = () => {
       </section>
 
       {/* Main Content Tabs */}
-      <section className="py-20 px-6">
+      <section id="concerts-section" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="concerts" className="w-full">
             <TabsList className="grid w-full grid-cols-3 bg-rock-gray/50 mb-12">
@@ -184,20 +247,49 @@ const Index = () => {
                             <Icon name="MapPin" size={20} className="text-electric-red" />
                             <span className="text-lg">{concert.venue}, {concert.city}</span>
                           </div>
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-4 mb-3">
                             <Icon name="DollarSign" size={20} className="text-electric-red" />
                             <span className="text-lg font-semibold">{concert.price}</span>
                           </div>
+                          <p className="text-gray-400 text-sm pl-6">{concert.description}</p>
                         </div>
                         <div className="text-right">
+                          <div className="mb-3 text-sm">
+                            {concert.status === 'available' && (
+                              <p className="text-gray-300">
+                                Осталось: <span className="text-electric-red font-semibold">{concert.ticketsLeft}</span> из {concert.totalTickets}
+                              </p>
+                            )}
+                            {concert.status === 'hot' && (
+                              <p className="text-orange-400 font-semibold animate-pulse">
+                                🔥 Горячая продажа! Осталось: {concert.ticketsLeft}
+                              </p>
+                            )}
+                            {concert.status === 'sold-out' && (
+                              <p className="text-gray-500">Все {concert.totalTickets} билетов распроданы</p>
+                            )}
+                          </div>
+                          
                           {concert.status === 'available' ? (
-                            <Button className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold">
+                            <Button 
+                              onClick={() => openTicketModal(concert)}
+                              className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold"
+                            >
                               <Icon name="Ticket" size={16} className="mr-2" />
                               Купить билет
                             </Button>
+                          ) : concert.status === 'hot' ? (
+                            <Button 
+                              onClick={() => openTicketModal(concert)}
+                              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold animate-pulse"
+                            >
+                              <Icon name="Flame" size={16} className="mr-2" />
+                              Последние билеты!
+                            </Button>
                           ) : (
                             <Button variant="secondary" disabled className="bg-rock-gray text-gray-400">
-                              Билеты распроданы
+                              <Icon name="X" size={16} className="mr-2" />
+                              Распродано
                             </Button>
                           )}
                         </div>
@@ -358,6 +450,15 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      
+      {/* Ticket Modal */}
+      {selectedConcert && (
+        <TicketModal 
+          concert={selectedConcert}
+          isOpen={isTicketModalOpen}
+          onClose={closeTicketModal}
+        />
+      )}
     </div>
   );
 };
