@@ -91,7 +91,7 @@ const Index = () => {
             TONY TYLER
           </h1>
           <p className="text-2xl md:text-3xl mb-8 text-electric-red font-oswald">
-            HEAVY METAL LEGENDS
+            НОВАЯ ВОЛНА АЛЬТЕРНАТИВНОГО РОКА
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold text-lg px-8 py-4 animate-pulse-glow">
