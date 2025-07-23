@@ -82,10 +82,30 @@ const Index = () => {
   ];
 
   const tracks = [
-    { id: 1, title: "Heavy Thunder", duration: "4:32" },
-    { id: 2, title: "Electric Storm", duration: "3:48" },
-    { id: 3, title: "Metal Heart", duration: "5:12" },
-    { id: 4, title: "Neon Nights", duration: "4:05" }
+    { 
+      id: 1, 
+      title: "Heavy Thunder", 
+      duration: "4:32",
+      yandexUrl: "https://music.yandex.ru/artist/2184411"
+    },
+    { 
+      id: 2, 
+      title: "Electric Storm", 
+      duration: "3:48",
+      yandexUrl: "https://music.yandex.ru/artist/2184411"
+    },
+    { 
+      id: 3, 
+      title: "Metal Heart", 
+      duration: "5:12",
+      yandexUrl: "https://music.yandex.ru/artist/2184411"
+    },
+    { 
+      id: 4, 
+      title: "Neon Nights", 
+      duration: "4:05",
+      yandexUrl: "https://music.yandex.ru/artist/2184411"
+    }
   ];
 
   const gallery = [
@@ -94,8 +114,10 @@ const Index = () => {
   ];
 
   const playTrack = (track: any) => {
+    // Открываем Яндекс.Музыку в новой вкладке
+    window.open(track.yandexUrl, '_blank');
     setCurrentTrack(track);
-    setIsPlaying(!isPlaying);
+    setIsPlaying(true);
   };
 
   const openTicketModal = (concert: any) => {
@@ -321,18 +343,61 @@ const Index = () => {
                           </Button>
                           <div>
                             <h4 className="font-semibold text-lg">{track.title}</h4>
-                            <p className="text-gray-400">{track.duration}</p>
+                            <p className="text-gray-400 flex items-center gap-2">
+                              {track.duration}
+                              <span className="text-xs bg-electric-red text-deep-black px-2 py-0.5 rounded-full font-medium">
+                                Слушать на Яндекс.Музыке
+                              </span>
+                            </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Icon name="Download" size={16} className="text-electric-red" />
-                          <span className="text-sm text-gray-400">MP3</span>
+                        <div className="flex items-center gap-4">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="border-electric-red text-electric-red hover:bg-electric-red hover:text-deep-black"
+                            onClick={() => window.open(track.yandexUrl, '_blank')}
+                          >
+                            <Icon name="ExternalLink" size={14} className="mr-1" />
+                            Открыть
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
+              
+              {/* Яндекс.Музыка Integration Section */}
+              <Card className="bg-gradient-to-r from-electric-red/20 to-orange-500/20 border-electric-red mt-8">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-2xl font-oswald font-bold text-electric-red mb-2">
+                        🎵 Слушайте TONY TYLER на Яндекс.Музыке
+                      </h3>
+                      <p className="text-gray-300 mb-4">
+                        Полный каталог наших треков, альбомы и эксклюзивные записи
+                      </p>
+                      <div className="flex items-center gap-4">
+                        <Button 
+                          size="lg"
+                          className="bg-electric-red hover:bg-electric-red/90 text-deep-black font-semibold"
+                          onClick={() => window.open('https://music.yandex.ru/artist/2184411', '_blank')}
+                        >
+                          <Icon name="Music" size={20} className="mr-2" />
+                          Перейти к исполнителю
+                        </Button>
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <Icon name="Users" size={16} className="text-electric-red" />
+                          <span>2.1K подписчиков</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-6xl">🎧</div>
+                  </div>
+                </CardContent>
+              </Card>
               
               {/* Audio Player */}
               {currentTrack && (
